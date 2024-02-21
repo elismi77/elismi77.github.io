@@ -20,6 +20,14 @@
 </head>
 <body>
 
+<div id="quiz-container">
+    <form id="quiz-form">
+        <div id="question-container"></div>
+        <input type="text" id="answer-input" placeholder="Réponse">
+        <button type="button" onclick="verifierReponse()">Valider</button>
+    </form>
+</div>
+
 <script>
     const questions = [
         { question: "Quel était le nom de l'hotel ?", reponse: "5061726973" },
@@ -30,52 +38,60 @@
         { question: "Quel accessoire est indispensable pour bien faire l'amour ?", reponse: "636F7565747465" }
     ];
 
-    const questionsAleatoires = questions.sort(() => Math.random() - 0.5).slice(0, 3);
+    const quizContainer = document.getElementById("quiz-container");
+    const questionContainer = document.getElementById("question-container");
+    const answerInput = document.getElementById("answer-input");
+    let currentQuestionIndex = 0;
     let reponsesCorrectes = 0;
 
-    function verifierReponses() {
-        for (let i = 0; i < 3; i++) {
-            let reponseUtilisateur;
-            let reponseHexadecimal;
+    function afficherQuestion() {
+        questionContainer.textContent = questions[currentQuestionIndex].question;
+    }
 
-            do {
-                reponseUtilisateur = prompt(questionsAleatoires[i].question);
-                reponseHexadecimal = reponseUtilisateur ? Buffer.from(reponseUtilisateur).toString('hex') : '';
-                
-                if (reponseHexadecimal === questionsAleatoires[i].reponse) {
-                    reponsesCorrectes++;
-                    afficherMessageCorrect();
-                } else {
-                    afficherMessageErreur();
-                }
-            } while (reponseHexadecimal !== questionsAleatoires[i].reponse);
+    function verifierReponse() {
+        const reponseUtilisateur = answerInput.value;
+        const reponseHexadecimal = reponseUtilisateur ? Buffer.from(reponseUtilisateur).toString('hex') : '';
+
+        if (reponseHexadecimal === questions[currentQuestionIndex].reponse) {
+            reponsesCorrectes++;
+            afficherMessageCorrect();
+        } else {
+            afficherMessageErreur();
         }
 
-        if (reponsesCorrectes === 3) {
-            afficherMessageGagné();
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < 3) {
+            afficherQuestion();
+        } else {
+            afficherResultatFinal();
         }
     }
 
     function afficherMessageCorrect() {
         const messageCorrect = document.createElement('div');
         messageCorrect.textContent = "Bonne réponse ! Passons à la question suivante.";
-        document.body.appendChild(messageCorrect);
+        quizContainer.appendChild(messageCorrect);
     }
 
     function afficherMessageErreur() {
         const messageErreur = document.createElement('div');
         messageErreur.textContent = "Désolé, mauvaise réponse. Veuillez réessayer.";
         messageErreur.classList.add('erreur');
-        document.body.appendChild(messageErreur);
+        quizContainer.appendChild(messageErreur);
     }
 
-    function afficherMessageGagné() {
-        const messageGagné = document.createElement('div');
-        messageGagné.textContent = "Félicitations, vous avez gagné !";
-        document.body.appendChild(messageGagné);
+    function afficherResultatFinal() {
+        const messageFinal = document.createElement('div');
+        if (reponsesCorrectes === 3) {
+            messageFinal.textContent = "Félicitations, vous avez gagné !";
+        } else {
+            messageFinal.textContent = "Désolé, vous n'avez pas répondu correctement à toutes les questions.";
+        }
+        quizContainer.appendChild(messageFinal);
     }
 
-    window.onload = verifierReponses;
+    window.onload = afficherQuestion;
 </script>
 
 </body>
