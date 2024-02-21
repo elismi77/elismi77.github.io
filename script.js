@@ -37,8 +37,6 @@ function validateAnswer() {
     if (stringToHex(userAnswer) === correctAnswer) {
         if (currentQuestionIndex < questions.length - 1) {
             currentQuestionIndex++;
-            displayQuestion();
-            return false; // Empêche la soumission du formulaire pour passer à la question suivante
         } else {
             alert("Toutes les réponses sont correctes. Redirection vers main.html.");
             window.location.href = "main.html";
@@ -48,6 +46,12 @@ function validateAnswer() {
         alert("La réponse est incorrecte. Essayez à nouveau.");
         return false;
     }
+
+    // Afficher la prochaine question après la validation
+    displayQuestion();
+
+    // Empêcher la soumission du formulaire pour passer à la question suivante
+    return false;
 }
 
 function stringToHex(str) {
