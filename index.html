@@ -9,12 +9,33 @@
 <body>
 
     <div class="container">
-        <h2>Quel était le nom de l'hotel</h2>
+        <h2>Répondez aux questions suivantes</h2>
 
-        <form action="main.html" method="post" onsubmit="return validatePassword()">
-            <label for="password"></label>
-            <input type="password" id="password" name="password" required>
+        <form action="main.html" method="post" onsubmit="return validateAnswers()">
+            <label for="answer1">1. Quel était l'hôtel ?</label>
+            <input type="text" id="answer1" name="answer1" required>
             <br>
+
+            <label for="answer2">2. Quelle est l'heure la plus importante de votre vie ?</label>
+            <input type="text" id="answer2" name="answer2" required>
+            <br>
+
+            <label for="answer3">3. Où étiez-vous assis ?</label>
+            <input type="text" id="answer3" name="answer3" required>
+            <br>
+
+            <label for="answer4">4. Quel est le jour où il vous a parlé ?</label>
+            <input type="text" id="answer4" name="answer4" required>
+            <br>
+
+            <label for="answer5">5. Pour Johnny Cash, June Carter était son ?</label>
+            <input type="text" id="answer5" name="answer5" required>
+            <br>
+
+            <label for="answer6">6. Quel accessoire vous faut-il pour bien faire l'amour ?</label>
+            <input type="text" id="answer6" name="answer6" required>
+            <br>
+
             <input type="submit" value="Valider">
         </form>
     </div>
