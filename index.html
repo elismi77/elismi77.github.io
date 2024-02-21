@@ -50,18 +50,16 @@
 
     function verifierReponse() {
         const reponseUtilisateur = answerInput.value;
-        const reponseHexadecimal = reponseUtilisateur ? Buffer.from(reponseUtilisateur).toString('hex') : '';
 
-        if (reponseHexadecimal === questions[currentQuestionIndex].reponse) {
+        if (reponseUtilisateur === questions[currentQuestionIndex].reponse) {
             reponsesCorrectes++;
             afficherMessageCorrect();
         } else {
             afficherMessageErreur();
         }
 
-        currentQuestionIndex++;
-
-        if (currentQuestionIndex < 3) {
+        if (currentQuestionIndex < 2) {
+            currentQuestionIndex++;
             afficherQuestion();
         } else {
             afficherResultatFinal();
