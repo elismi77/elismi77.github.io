@@ -1,5 +1,5 @@
-var questions = [
-    { id: "answer1", question: "Quel était l'hôtel ?", answer: "sub" },
+nom de var questions = [
+    { id: "answer1", question: "Quel était le nom de l'hôtel ?", answer: "sub" },
     { id: "answer2", question: "Quelle est l'heure la plus importante de votre vie ?", answer: "14h14" },
     { id: "answer3", question: "Où étiez-vous assis ?", answer: "marches" },
     { id: "answer4", question: "Quel est le jour où il vous a parlé ?", answer: "26" },
