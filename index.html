@@ -31,10 +31,9 @@
     ];
 
     const questionsAleatoires = questions.sort(() => Math.random() - 0.5).slice(0, 3);
+    let reponsesCorrectes = 0;
 
     function verifierReponses() {
-        let reponsesCorrectes = 0;
-
         for (let i = 0; i < 3; i++) {
             let reponseUtilisateur;
             let reponseHexadecimal;
@@ -45,6 +44,7 @@
                 
                 if (reponseHexadecimal === questionsAleatoires[i].reponse) {
                     reponsesCorrectes++;
+                    afficherMessageCorrect();
                 } else {
                     afficherMessageErreur();
                 }
@@ -52,16 +52,27 @@
         }
 
         if (reponsesCorrectes === 3) {
-            const texteEncodé = "546578746520656e636f6461676520696e2068657861646563696d616c";
-            alert(Buffer.from(texteEncodé, 'hex').toString('utf-8'));
+            afficherMessageGagné();
         }
+    }
+
+    function afficherMessageCorrect() {
+        const messageCorrect = document.createElement('div');
+        messageCorrect.textContent = "Bonne réponse ! Passons à la question suivante.";
+        document.body.appendChild(messageCorrect);
     }
 
     function afficherMessageErreur() {
         const messageErreur = document.createElement('div');
-        messageErreur.textContent = "Désolé, vous n'avez pas répondu correctement à cette question. Veuillez réessayer.";
+        messageErreur.textContent = "Désolé, mauvaise réponse. Veuillez réessayer.";
         messageErreur.classList.add('erreur');
         document.body.appendChild(messageErreur);
+    }
+
+    function afficherMessageGagné() {
+        const messageGagné = document.createElement('div');
+        messageGagné.textContent = "Félicitations, vous avez gagné !";
+        document.body.appendChild(messageGagné);
     }
 
     window.onload = verifierReponses;
