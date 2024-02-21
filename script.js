@@ -33,9 +33,9 @@ function displayQuestion() {
 function validateAnswer() {
     var userAnswer = document.getElementById(questions[currentQuestionIndex].id).value.toLowerCase();
     var correctAnswer = questions[currentQuestionIndex].answer;
-    
+
     if (stringToHex(userAnswer) === correctAnswer) {
-        document.getElementById("currentAnswer").value = userAnswer;
+        document.getElementById("currentAnswer").value = stringToHex(userAnswer);
 
         if (currentQuestionIndex < questions.length - 1) {
             currentQuestionIndex++;
