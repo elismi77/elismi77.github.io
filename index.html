@@ -9,10 +9,11 @@
 <body>
 
     <div class="container">
-        <h2 id="questionTitle">Répondez à la question suivante svp</h2>
+        <h2 id="questionTitle">Répondez à la question suivante</h2>
 
         <form action="main.html" method="post" id="questionForm" onsubmit="return validateAnswer()">
             <div id="questionContainer"></div>
+            <input type="text" id="currentAnswer" name="currentAnswer" style="display:none;" />
             <input type="submit" value="Valider">
         </form>
     </div>
