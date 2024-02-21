@@ -1,24 +1,37 @@
-function validatePassword() {
-    var password = document.getElementById("password").value;
-    var hashedPassword = stringToHex(password);
+var correctAnswers = {
+    answer1: "sub",
+    answer2: "14h14",
+    answer3: "marches",
+    answer4: "26",
+    answer5: "unique",
+    answer6: "couette"
+};
 
-    // Utilisez hashedPassword dans la requête ou le stockage côté serveur
-    console.log("Mot de passe en hexadécimal : " + hashedPassword);
+function validateAnswers() {
+    var userAnswers = {
+        answer1: document.getElementById("answer1").value.toLowerCase(),
+        answer2: document.getElementById("answer2").value.toLowerCase(),
+        answer3: document.getElementById("answer3").value.toLowerCase(),
+        answer4: document.getElementById("answer4").value.toLowerCase(),
+        answer5: document.getElementById("answer5").value.toLowerCase(),
+        answer6: document.getElementById("answer6").value.toLowerCase()
+    };
 
-    // Remplacez "737562" par la représentation hexadécimale correcte de votre mot de passe
-    if (hashedPassword === "737562") {
-        return true; // Mot de passe correct, permet de soumettre le formulaire
+    if (checkAnswers(userAnswers)) {
+        alert("Réponses correctes. Redirection vers main.html.");
+        window.location.href = "main.html";
+        return true;
     } else {
-        alert("Mot de passe incorrect");
-        return false; // Empêche le formulaire d'être soumis
+        alert("Au moins une des réponses est incorrecte.");
+        return false;
     }
 }
 
-function stringToHex(str) {
-    var hex = '';
-    for (var i = 0; i < str.length; i++) {
-        var charCode = str.charCodeAt(i).toString(16);
-        hex += (charCode.length === 1 ? '0' : '') + charCode;
+function checkAnswers(userAnswers) {
+    for (var key in userAnswers) {
+        if (userAnswers[key] !== correctAnswers[key]) {
+            return false;
+        }
     }
-    return hex;
+    return true;
 }
