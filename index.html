@@ -1,23 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Page de Mot de Passe</title>
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2 id="questionTitle">Répondez à la question suivante</h2>
+<script>
+    // Liste des questions et réponses encodées en hexadécimal
+    const questions = [
+        { question: "Quelle est la capitale de la France ?", reponse: "5061726973" },
+        { question: "Quel est le résultat de 2 + 2 ?", reponse: "34" },
+        { question: "Quelle est la couleur du ciel ?", reponse: "626c6575" },
+        { question: "Combien de planètes y a-t-il dans notre système solaire ?", reponse: "39" },
+        { question: "Quelle est la première lettre de l'alphabet ?", reponse: "61" },
+        { question: "Quel est le plus grand océan de la Terre ?", reponse: "506163966963" }
+    ];
 
-        <form action="main.html" method="post" id="questionForm" onsubmit="return validateAnswer()">
-            <div id="questionContainer"></div>
-            <input type="text" id="currentAnswer" name="currentAnswer" style="display:none;" />
-            <input type="submit" value="Valider">
-        </form>
-    </div>
+    // Mélanger les questions pour en choisir trois aléatoires
+    const questionsAleatoires = questions.sort(() => Math.random() - 0.5).slice(0, 3);
 
-    <script src="script.js"></script>
+    // Fonction pour vérifier les réponses
+    function verifierReponses() {
+        let reponsesCorrectes = 0;
+
+        for (let i = 0; i < 3; i++) {
+            const reponseUtilisateur = prompt(questionsAleatoires[i].question);
+            const reponseHexadecimal = reponseUtilisateur ? Buffer.from(reponseUtilisateur).toString('hex') : '';
+
+            if (reponseHexadecimal === questionsAleatoires[i].reponse) {
+                reponsesCorrectes++;
+            }
+        }
+
+        if (reponsesCorrectes === 3) {
+            const texteEncodé = "546578746520656e636f6461676520696e2068657861646563696d616c";
+            alert(Buffer.from(texteEncodé, 'hex').toString('utf-8'));
+        } else {
+            alert("Désolé, vous n'avez pas répondu correctement à toutes les questions.");
+        }
+    }
+
+    // Appeler la fonction lorsque la page est chargée
+    window.onload = verifierReponses;
+</script>
+
 </body>
 </html>
