@@ -1,37 +1,63 @@
-var correctAnswers = {
-    answer1: "sub",
-    answer2: "14h14",
-    answer3: "marches",
-    answer4: "26",
-    answer5: "unique",
-    answer6: "couette"
-};
+var questions = [
+    { id: "answer1", question: "Quel était l'hôtel ?", answer: "sub" },
+    { id: "answer2", question: "Quelle est l'heure la plus importante de votre vie ?", answer: "14h14" },
+    { id: "answer3", question: "Où étiez-vous assis ?", answer: "marches" },
+    { id: "answer4", question: "Quel est le jour où il vous a parlé ?", answer: "26" },
+    { id: "answer5", question: "Pour Johnny Cash, June Carter était son ?", answer: "unique" },
+    { id: "answer6", question: "Quel accessoire vous faut-il pour bien faire l'amour ?", answer: "couette" }
+];
 
-function validateAnswers() {
-    var userAnswers = {
-        answer1: document.getElementById("answer1").value.toLowerCase(),
-        answer2: document.getElementById("answer2").value.toLowerCase(),
-        answer3: document.getElementById("answer3").value.toLowerCase(),
-        answer4: document.getElementById("answer4").value.toLowerCase(),
-        answer5: document.getElementById("answer5").value.toLowerCase(),
-        answer6: document.getElementById("answer6").value.toLowerCase()
-    };
+var currentQuestionIndex = 0;
 
-    if (checkAnswers(userAnswers)) {
-        alert("Réponses correctes. Redirection vers main.html.");
-        window.location.href = "main.html";
-        return true;
+function displayQuestion() {
+    var questionContainer = document.getElementById("questionContainer");
+    questionContainer.innerHTML = "";
+
+    var currentQuestion = questions[currentQuestionIndex];
+    var label = document.createElement("label");
+    label.setAttribute("for", currentQuestion.id);
+    label.textContent = currentQuestion.question;
+
+    var input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.setAttribute("id", currentQuestion.id);
+    input.setAttribute("name", currentQuestion.id);
+    input.setAttribute("required", true);
+
+    questionContainer.appendChild(label);
+    questionContainer.appendChild(input);
+
+    document.getElementById("questionTitle").textContent = "Répondez à la question suivante";
+}
+
+function validateAnswer() {
+    var userAnswer = document.getElementById(questions[currentQuestionIndex].id).value.toLowerCase();
+    var correctAnswer = questions[currentQuestionIndex].answer;
+    
+    if (stringToHex(userAnswer) === correctAnswer) {
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            displayQuestion();
+            return false; // Empêche la soumission du formulaire pour passer à la question suivante
+        } else {
+            alert("Toutes les réponses sont correctes. Redirection vers main.html.");
+            window.location.href = "main.html";
+            return true;
+        }
     } else {
-        alert("Au moins une des réponses est incorrecte.");
+        alert("La réponse est incorrecte. Essayez à nouveau.");
         return false;
     }
 }
 
-function checkAnswers(userAnswers) {
-    for (var key in userAnswers) {
-        if (userAnswers[key] !== correctAnswers[key]) {
-            return false;
-        }
+function stringToHex(str) {
+    var hex = '';
+    for (var i = 0; i < str.length; i++) {
+        var charCode = str.charCodeAt(i).toString(16);
+        hex += (charCode.length === 1 ? '0' : '') + charCode;
     }
-    return true;
+    return hex;
 }
+
+// Afficher la première question au chargement de la page
+displayQuestion();
