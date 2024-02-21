@@ -10,6 +10,12 @@
             text-align: center;
             margin: 50px;
         }
+
+        .erreur {
+            font-size: 24px;
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -45,8 +51,16 @@
             const texteEncodé = "546578746520656e636f6461676520696e2068657861646563696d616c";
             alert(Buffer.from(texteEncodé, 'hex').toString('utf-8'));
         } else {
-            alert("Désolé, vous n'avez pas répondu correctement à toutes les questions.");
+            afficherMessageErreur();
         }
+    }
+
+    // Fonction pour afficher un message d'erreur en cas de réponses incorrectes
+    function afficherMessageErreur() {
+        const messageErreur = document.createElement('div');
+        messageErreur.textContent = "Désolé, vous n'avez pas répondu correctement à toutes les questions.";
+        messageErreur.classList.add('erreur');
+        document.body.appendChild(messageErreur);
     }
 
     // Appeler la fonction lorsque la page est chargée
