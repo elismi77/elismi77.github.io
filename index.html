@@ -21,7 +21,6 @@
 <body>
 
 <script>
-    // Liste des questions et réponses encodées en hexadécimal
     const questions = [
         { question: "Quel était le nom de l'hotel ?", reponse: "5061726973" },
         { question: "Quelle est l'heure la plus importante de votre vie (hh:hh) ?", reponse: "737562" },
@@ -31,39 +30,40 @@
         { question: "Quel accessoire est indispensable pour bien faire l'amour ?", reponse: "636F7565747465" }
     ];
 
-    // Mélanger les questions pour en choisir trois aléatoires
     const questionsAleatoires = questions.sort(() => Math.random() - 0.5).slice(0, 3);
 
-    // Fonction pour vérifier les réponses
     function verifierReponses() {
         let reponsesCorrectes = 0;
 
         for (let i = 0; i < 3; i++) {
-            const reponseUtilisateur = prompt(questionsAleatoires[i].question);
-            const reponseHexadecimal = reponseUtilisateur ? Buffer.from(reponseUtilisateur).toString('hex') : '';
+            let reponseUtilisateur;
+            let reponseHexadecimal;
 
-            if (reponseHexadecimal === questionsAleatoires[i].reponse) {
-                reponsesCorrectes++;
-            }
+            do {
+                reponseUtilisateur = prompt(questionsAleatoires[i].question);
+                reponseHexadecimal = reponseUtilisateur ? Buffer.from(reponseUtilisateur).toString('hex') : '';
+                
+                if (reponseHexadecimal === questionsAleatoires[i].reponse) {
+                    reponsesCorrectes++;
+                } else {
+                    afficherMessageErreur();
+                }
+            } while (reponseHexadecimal !== questionsAleatoires[i].reponse);
         }
 
         if (reponsesCorrectes === 3) {
             const texteEncodé = "546578746520656e636f6461676520696e2068657861646563696d616c";
             alert(Buffer.from(texteEncodé, 'hex').toString('utf-8'));
-        } else {
-            afficherMessageErreur();
         }
     }
 
-    // Fonction pour afficher un message d'erreur en cas de réponses incorrectes
     function afficherMessageErreur() {
         const messageErreur = document.createElement('div');
-        messageErreur.textContent = "Désolé, vous n'avez pas répondu correctement à toutes les questions.";
+        messageErreur.textContent = "Désolé, vous n'avez pas répondu correctement à cette question. Veuillez réessayer.";
         messageErreur.classList.add('erreur');
         document.body.appendChild(messageErreur);
     }
 
-    // Appeler la fonction lorsque la page est chargée
     window.onload = verifierReponses;
 </script>
 
