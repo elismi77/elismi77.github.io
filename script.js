@@ -32,11 +32,9 @@ function displayQuestion() {
 
 function validateAnswer() {
     var userAnswer = document.getElementById(questions[currentQuestionIndex].id).value.toLowerCase();
-    var correctAnswer = questions[currentQuestionIndex].answer;
+    var correctAnswer = questions[currentQuestionIndex].answer.toLowerCase();
 
-    if (stringToHex(userAnswer) === correctAnswer) {
-        document.getElementById("currentAnswer").value = stringToHex(userAnswer);
-
+    if (userAnswer === correctAnswer) {
         if (currentQuestionIndex < questions.length - 1) {
             currentQuestionIndex++;
             displayQuestion();
@@ -50,15 +48,6 @@ function validateAnswer() {
         alert("La réponse est incorrecte. Essayez à nouveau.");
         return false;
     }
-}
-
-function stringToHex(str) {
-    var hex = '';
-    for (var i = 0; i < str.length; i++) {
-        var charCode = str.charCodeAt(i).toString(16);
-        hex += (charCode.length === 1 ? '0' : '') + charCode;
-    }
-    return hex;
 }
 
 // Afficher la première question au chargement de la page
